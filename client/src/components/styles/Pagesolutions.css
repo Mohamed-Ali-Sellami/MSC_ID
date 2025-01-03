@@ -1,0 +1,146 @@
+.containersolution {
+    padding: 20px;
+    max-width: 3000px;
+    margin-top: 100px ;
+  }
+  
+  .flex-containersolution {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+  
+  .image-sectionsolution {
+    flex: 1;
+    min-width: 300px;
+  }
+  .image-sectionsolution img {
+    width: 90%;
+    height: auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .main-imagesolution {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
+  }
+  
+  .content-sectionsolution {
+    flex: 1;
+    min-width: 300px;
+  }
+  
+  .titlesolution {
+    font-size: 32px;
+    color: #1a1a1a;
+    margin-bottom: 20px;
+    font-weight: bold;
+    line-height: 1.2;
+  }
+  
+  .descriptionsolution {
+    font-size: 16px;
+    color: #4a4a4a;
+    line-height: 1.6;
+    margin-bottom: 15px;
+  }
+  
+  .cta-buttonsolution {
+    background-color: #2563eb;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-top: 20px;
+    transition: background-color 0.3s ease;
+  }
+  
+  .cta-buttonsolution:hover {
+    background-color: #1d4ed8;
+  }
+
+
+  /******section 2*********/
+
+  .containersection2solution {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+    font-family: Arial, sans-serif;
+  }
+
+  .containersection2solution h1 {
+    text-align: center;
+    font-size: 3em;
+    margin-bottom: 40px;
+    font-weight: bold;
+  }
+
+  .steps-containersection2solution {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+
+  .stepsection2solution {
+    flex: 1;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 8px ;
+    align-items: center;
+    text-align: center;
+    height: auto;
+  }
+
+  .iconsection2solution {
+    font-size: 2em;
+    margin-bottom: 15px;
+    text-align: center;
+    align-items: center;
+  }
+  .iconsection2solution img {
+    width: 50px;
+    height: 50px;
+  }
+
+  .stepsection2solution h2 {
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    font-weight: bold;
+  }
+
+  .stepsection2solution p {
+    color: #666;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+
+  .learn-moresection2solution {
+    display: inline-block;
+    padding: 8px 20px;
+    border: 2px solid #000;
+    text-decoration: none;
+    color: #000;
+    font-weight: bold;
+  }
+
+
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .flex-containersolution {
+      gap: 20px;
+    }
+    
+    .titlesolution {
+      font-size: 28px;
+    }
+    .steps-containersection2solution {
+        flex-direction: column;
+      }
+  }

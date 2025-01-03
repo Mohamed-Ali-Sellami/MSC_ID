@@ -1,0 +1,272 @@
+.navbar {
+    background-color: rgb(13, 7, 44);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    width: 100%; 
+    top: 0;
+    z-index: 1000;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-container {
+    display: flex;
+    justify-content: space-between; 
+    align-items: center;
+    width: 100%;
+    max-width: 100%; 
+    margin: 0;
+    padding: 0 2rem; 
+}
+
+.logo-img {
+    height: 150px;
+    width: 150px;
+    margin-right: auto; 
+}
+
+.nav-content {
+    display: flex;
+    align-items: center;
+    justify-content:space-between; 
+    margin-left: 0; 
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+    align-items: center;
+    margin-right: 2rem; 
+}
+
+.nav-item a {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: bold;
+}
+
+.nav-item a:hover {
+   
+        color: white;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid
+    
+}
+
+.loginbtnnavbar {
+    color: white;
+    text-decoration: none;
+    font-size: 1.5rem; 
+    font-weight: bold; 
+}
+
+.dropdown-arrow {
+    font-size: 0.8rem;
+    color: #666;
+}
+
+.nav-buttons {
+    display: flex;
+    gap: 1rem;
+    align-items: center;
+}
+.bars-mobile{
+display: none;
+
+}
+.btn {
+    padding: 0.5rem 1rem;
+    border-radius: 25px;
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    font-weight: 500;
+    white-space: nowrap;
+}
+
+.btn .btn-primarynavbar {
+    border-radius: 25px;
+    border: 1px solid #0066cc;
+}
+
+.btn-outline {
+    background-color: transparent;
+    color: #0066cc;
+    border: 1px solid #0066cc;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}
+
+.btn-primarynavbar {
+    background-color: #0066cc;
+    color: white;
+    padding: 8px 16px;
+    border-radius:25px;
+    font-size: 15px;
+    transition: background-color 0.3s ease;
+}
+
+.btn-primary:hover {
+    background-color: #0052a3;
+}
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0.5rem;
+}
+
+.bar {
+    display: block;
+    width: 25px;
+    height: 3px;
+    margin: 5px auto;
+    background-color: white;
+    transition: all 0.3s ease-in-out;
+}
+
+/* Responsive Styles */
+@media (max-width: 1024px) {
+    .nav-links {
+        gap: 1rem;
+    }
+    
+    .nav-buttons {
+        gap: 0.5rem;
+    }
+    
+    .btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+        border-radius: 25px;
+    }
+}
+
+
+@media (max-width: 768px) {
+    .navbar {
+        padding: 1rem;
+    }
+
+    .mobile-menu-btn {
+        display: block;
+        z-index: 100;
+        margin: 0;
+    }
+
+    .nav-content {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 100%;
+        height: 100vh;
+        background-color: rgb(13, 7, 44);
+        flex-direction: column;
+        padding: 5rem 2rem;
+        transition: 0.3s ease-in-out;
+        margin: 0;
+        box-shadow: -2px 0 4px rgba(0,0,0,0.1);
+        display: flex;
+        justify-content: space-between;
+        padding: 0;
+        margin-bottom: 2rem;
+
+    }
+
+    .nav-content.active {
+        right: 0;
+    }
+
+    .nav-links {
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        width: 100%;
+        margin-top: 15px;
+        padding: 100px;
+    }
+    .nav-links a {
+        padding: 20px;
+    }
+
+    .nav-buttons {
+        flex-direction: column;
+        width: 100%;
+        margin-top: 2rem;
+        gap: 1rem;
+        color: white;
+        margin-bottom: 2rem;
+    }
+
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+    .btn-primarynavbar {
+        display: none;
+    }
+    .bars-mobile {
+        display: flex;
+        justify-content: flex-end;
+        color: white;
+    }
+    .loginbtnnavbar {
+        display: none;
+    }
+
+
+
+    /* Hamburger Animation  (fazet mouvement mta3 3bars version mobile*/
+    .mobile-menu-btn.active .bar:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+
+    .mobile-menu-btn.active .bar:nth-child(2) {
+        opacity: 0;
+    }
+
+    .mobile-menu-btn.active .bar:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+}
+
+
+@media (max-width: 345px) {
+    .navbar {
+        margin: auto;
+        padding: 0.75rem;
+        width: 100%;
+    }
+
+    .logo-img {
+        height: 32px;
+    }
+
+    .nav-content {
+        width: 100%;
+        padding: 4rem 1.5rem;
+        display: flex;
+        justify-content: space-between;
+
+    }
+   
+}
+
+   
+
+

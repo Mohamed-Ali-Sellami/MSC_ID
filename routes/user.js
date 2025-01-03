@@ -18,9 +18,9 @@ const isAuth = require("../middelwares/passport");
 //REGISTER
 
 router.post("/register", registerRules(), validation, async (req, res) => {
-  const { name, lastname, email, password } = req.body;
+  const { name, lastname, email, password ,dateOfBirth ,mobile, company , isAdmin } = req.body;
   try {
-    const newUser = new User({ name, lastname, email, password });
+    const newUser = new User({ name, lastname, email, password , dateOfBirth ,mobile ,company, isAdmin });
 
     // check if the email exist
     const searchedUser = await User.findOne({ email });

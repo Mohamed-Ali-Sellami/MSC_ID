@@ -1,0 +1,97 @@
+.bodys3 {
+    margin: 0;
+    padding: 40px 20px;
+    font-family: Arial, sans-serif;
+    color: #333;
+}
+
+.featuress3 {
+    background-color: #4557bb;
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.titles3 {
+    font-size: 36px;
+    margin-bottom: 50px;
+}
+
+.cardss3 {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+    max-width: 1200px;
+    margin: 0 auto;
+    flex-wrap: wrap;
+}
+
+.cards3 {
+    flex: 1;
+    min-width: 250px;
+    max-width: 300px;
+    text-align: center;
+    padding: 20px;
+}
+
+.icons3 {
+    font-size: 40px;
+    margin-bottom: 20px;
+}
+
+.cards3 h3 {
+    margin: 15px 0;
+    font-size: 24px;
+}
+
+.cards3 p {
+    color: rgba(255, 255, 255, 0.9);
+    line-height: 1.5;
+}
+
+.cta-sections3 {
+    text-align: center;
+    padding: 80px 20px;
+}
+
+.cta-sections3 h2 {
+    font-size: 32px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+.cta-sections3 p {
+    color: #666;
+    margin-bottom: 30px;
+    font-size: 18px;
+}
+
+.buttonss3 {
+    display: flex;
+    gap: 20px;
+    justify-content: center;
+}
+
+.btn {
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.btn-primary {
+    background-color: #4557bb;
+    color: white;
+    border: none;
+}
+
+.btn-secondary {
+    border: 2px solid #4557bb;
+    color: #4557bb;
+    background: transparent;
+}
+
+.btn:hover {
+    opacity: 0.9;
+}

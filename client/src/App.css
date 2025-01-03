@@ -1,48 +1,291 @@
-body {
-  background: #eee !important;
-}
 
-.wrapper {
-  margin-top: 80px;
-  margin-bottom: 80px;
-}
+  
+  
+  
+  /********************************************dashboard*********************************/
+  
+  .dashboarddash {
+    display: flex;
+    height: 100vh;
+    flex-direction: row;
+    justify-content: space-between;
+    overflow: auto;
+  }
+  
+  .sidebardash {
+    width: 300px;
+    top: 0;
+    left: 0;
+    background-color: #16325b;
+    color: white;
+    padding: 20px;
+    position: fixed;
+    height: 100%;
+  }
 
-.form-signin {
-  max-width: 380px;
-  padding: 15px 35px 45px;
-  margin: 0 auto;
-  background-color: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
-}
-.checkbox {
-  font-weight: normal;
-}
-
-.form-control {
-  position: relative;
-  font-size: 16px;
-  height: auto;
-  padding: 10px;
-}
-
-input[type="text"] {
-  margin-bottom: -1px;
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-}
-
-input[type="password"] {
-  margin-bottom: 20px;
-  border-top-left-radius: 0;
-  border-top-right-radius: 0;
-}
-
-.header {
-  width: 100%;
-  height: 150px;
-  background-color: rgb(47, 101, 187);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-}
+  .sidebardash img {
+    height: 250px;
+    width: 250px;
+  }
+  .sidebardash h2 {
+    color: white;
+  }
+  .sidebardash ul li {
+    margin-bottom: 10px;
+    padding: 20px;
+    text-decoration: none;
+    list-style: none;
+    color: white;
+  }
+  .sidebardash ul li i {
+    padding: 15px;
+  }
+  
+  .contentdash {
+    width: 80%;
+    flex-grow: 1;
+    padding: 20px;
+    background-color: #f7fafc;
+    overflow-y: auto;
+    margin-left: 350px;
+  }
+  
+  .headerdash {
+    display: flex;
+    justify-content: space-between;
+    background-color: white;
+    padding: 20px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    width:100%;
+    padding-left: 350px;
+  }
+  .welcomedashdash {
+    color: black;
+    padding: 0;
+  }
+  .headerdash img {
+    height: 100px;
+    width: 100px;
+  }
+  .profildash {
+    align-items: center;
+    text-align: center;
+  }
+  
+  .profildash h3 {
+    color: black;
+  }
+  .statsdash {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+    margin-left: 350px;
+  }
+  
+  
+  .stat-carddash {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .chart-containerdash {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+  
+  .positivedash {
+    color: green;
+  }
+  
+  .negativedash {
+    color: red;
+  }
+  
+  /********************************Gestion users***************************/
+  
+  .box-gestionuserdash {
+    margin-left: 350px;
+  }
+  .box-gestionuserdash h1 {
+    width: 100%;
+    color: white;
+    text-align: center;
+    align-items: center;
+    padding-top: 50px;
+    margin-bottom: 20px;
+    margin-top: 20px;
+    background-color: #16325b;
+    height: 100px;
+  }
+  
+  .bodygestionuserdash table {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: Arial, sans-serif;
+  }
+  th,
+  td {
+    border: 1px solid #ddd;
+    padding: 12px;
+    text-align: center;
+  }
+  th {
+    background-color: #f2f2f2;
+    font-weight: bold;
+  }
+  
+  tr:nth-child(even) {
+    background-color: #f9f9f9;
+  }
+  tr:hover {
+    background-color: #f5f5f5;
+  }
+  @media screen and (max-width: 600px) {
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
+      display: block;
+    }
+    thead tr {
+      position: absolute;
+      top: -9999px;
+      left: -9999px;
+    }
+    tr {
+      margin-bottom: 15px;
+    }
+    td {
+      border: none;
+      position: relative;
+      padding-left: 50%;
+    }
+    td:before {
+      position: absolute;
+      top: 6px;
+      left: 6px;
+      width: 45%;
+      padding-right: 10px;
+      white-space: nowrap;
+      content: attr(data-label);
+      font-weight: bold;
+    }
+  }
+  
+  .btnaddcar {
+    background-color: #16325b;
+    color: white;
+    border-radius: 10px;
+    font-size: 25px;
+    margin-bottom: 20px;
+    margin-left: 500px;
+  }
+  
+  /****************************************ADD CAR******************************/
+  
+  .form {
+    background-color: #16325b;
+    padding: 20px;
+  }
+  
+  .input {
+    width: 80%;
+    padding: 20px;
+    margin-right: 10px;
+    border-radius: 20px;
+    box-sizing: border-box;
+    box-shadow: 5px 2px 2px #16325b;
+  }
+  
+  .submitButton {
+    background-color: #16325b;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    margin-left: 300px;
+    width: 150px;
+  }
+  .add-car-form {
+    margin-top: 20px;
+    margin-left: 200px;
+    width: 80%;
+  }
+  .settingsadmin {
+    display: flex;
+    justify-content: space-around;
+  }
+  .deletebtn {
+    background-color: red;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+  
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    width: 80px;
+  }
+  .updatebtn {
+    background-color: green;
+    border: none;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    text-decoration: none;
+  
+    font-size: 16px;
+    margin-top: 10px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    width: 80px;
+  }
+  .updatecarsettings p {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  .btn-up-ok {
+    margin-top: 20px;
+    width: 80px;
+  }
+  
+  .tdadmin {
+    padding: 10px;
+    border: 1px solid #ddd;
+    position: relative;
+  }
+  .tooltip {
+    position: absolute;
+    background-color: #333;
+    color: #e00909;
+    padding: 5px;
+    border-radius: 5px;
+    font-size: 12px;
+    z-index: 1010;
+    white-space: nowrap;
+  }
+  
+  .name-of-id{
+    margin-top: -163px;
+    margin-left: 20px;
+    padding-left: 500px;
+  }
+  

@@ -1,50 +1,72 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import './styles/Login.css'
 import { Link, useNavigate } from "react-router-dom";
 import { userLogin } from "../JS/userSlice/userSlice";
+import imagelg from './images/logo.png'
 
 const Login = () => {
   const [login, setlogin] = useState({
     email: "",
     password: "",
   });
+
+  /*exemple login ( mail: ahmed123@gmail.com / password: ahmed123)*/
+
+
   const dispatch = useDispatch();
   const isAuth = localStorage.getItem("token");
   let navigate = useNavigate();
 
   return (
-    <div>
-      <div className="wrapper">
-        <form onSubmit={(e) => e.preventDefault()} className="form-signin">
-          <h2 className="form-signin-heading">Please login</h2>
+    <div className="login-container">
+      <Link to="/"> <img src={imagelg} alt="logo"/></Link>
+      <div className="form-wrapper">
+        <form
+          onSubmit={(e) => e.preventDefault()}
+          className="form-signin styled-form"
+        >
+          <h2 className="form-heading">Sign in to MSC_checkID</h2>
+          <p>
+            New to MSC.tn? <Link to="/register">Create an MSC_ account</Link>
+          </p>
+          <label htmlFor="email" className="input-label">
+            Email *
+          </label>
           <input
-            type="text"
-            className="form-control"
-            name="username"
-            placeholder="Email Address"
-            required=""
-            autofocus=""
+            id="email"
+            type="email"
+            className="form-control input-field"
+            name="email"
+            placeholder="Enter your email address"
+            required
             onChange={(e) => setlogin({ ...login, email: e.target.value })}
           />
+          <label htmlFor="password" className="input-label">
+            Password *
+          </label>
           <input
+            id="password"
             type="password"
-            className="form-control"
+            className="form-control input-field"
             name="password"
-            placeholder="Password"
-            required=""
+            placeholder="Enter password"
+            required
             onChange={(e) => setlogin({ ...login, password: e.target.value })}
           />
-          <label className="checkbox">
+          <div className="checkbox-container">
             <input
               type="checkbox"
-              value="remember-me"
               id="rememberMe"
               name="rememberMe"
-            />{" "}
-            Remember me
-          </label>
+              className="remember-checkbox"
+            />
+            <label htmlFor="rememberMe" className="remember-label">
+              Remember me
+            </label>
+          </div>
           <button
-            className="btn btn-lg btn-primary btn-block"
+            className="btn btn-primary btn-login"
             onClick={() => {
               dispatch(userLogin(login));
               setTimeout(() => {
@@ -55,9 +77,20 @@ const Login = () => {
               }, 1000);
             }}
           >
-            Login
+            Sign in
           </button>
-          u already have account <Link to="/">Register now </Link>
+          <Link to="/forgot-password" className="forgot-link">
+            Forgot password?
+          </Link>
+          <div className="social-login">
+            <p>OR</p>
+            <div className="social-icons">
+              <button className="social-button facebook">  <i class="fa-brands fa-facebook"></i> </button>
+              <button className="social-button google">    <i class="fa-brands fa-google"></i></button>
+              <button className="social-button apple">     <i class="fa-brands fa-apple"></i></button>
+              <button className="social-button linkedin">  <i class="fa-brands fa-linkedin"></i></button>
+            </div>
+          </div>
         </form>
       </div>
     </div>
@@ -65,3 +98,25 @@ const Login = () => {
 };
 
 export default Login;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
