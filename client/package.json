@@ -3,7 +3,6 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
-    "@huggingface/inference": "^2.8.1",
     "@reduxjs/toolkit": "^1.6.2",
     "@techstark/opencv-js": "^4.10.0-release.1",
     "@testing-library/jest-dom": "^5.15.0",
