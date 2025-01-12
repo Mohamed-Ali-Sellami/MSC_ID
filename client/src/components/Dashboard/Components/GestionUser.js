@@ -1,156 +1,71 @@
 import React, { useState, useEffect } from 'react';
-import Sidebar from './Sidebar';
 import axios from 'axios';
+import Sidebar from './Sidebar';
+import { useDispatch, useSelector } from 'react-redux';
+import { deleteuser, updateuser } from '../../../JS/userSlice/userSlice';
+// import { useSelector } from 'react-redux';
 
 const GestionUser = () => {
-    const [allusers, setAllUsers] = useState([]);
-    const [editingUserId, setEditingUserId] = useState(null);
+    
+    const dispatch = useDispatch();
+    const [showthird, setshowthird] = useState(false);
+
+    const allusers = useSelector((store) => store.client?.client);
+    console.log("allusers",allusers)
+
     const [upuser, setupuser] = useState({
-        name: "",
-        email: "",
-        mobile: "",
-    });
+        name:"" ,
+        email:"",
 
-    // Récupérer les utilisateurs depuis la base de données
-    useEffect(() => {
-        const fetchUsers = async () => {
-            try {
-                const response = await axios.get('http://localhost:5900/user/all'); // Endpoint correct
-                setAllUsers(response.data);
-            } catch (error) {
-                console.error("Erreur lors du chargement des utilisateurs :", error);
-            }
-        };
-
-        fetchUsers();
-    }, []);
-
-    const handleUpdateChange = (field, value) => {
-        setupuser((prev) => ({
-            ...prev,
-            [field]: value,
-        }));
-    };
-
-    const handleUpdateSubmit = async (userId) => {
-        if (!upuser.name || !upuser.email || !upuser.mobile) {
-            alert("Tous les champs doivent être remplis !");
-            return;
-        }
-
-        try {
-            const response = await axios.put(`http://localhost:5900/user/${userId}`, upuser); // Endpoint correct
-            if (response.status === 200) {
-                setAllUsers((prevUsers) =>
-                    prevUsers.map((user) =>
-                        user._id === userId ? { ...user, ...upuser } : user
-                    )
-                );
-                setEditingUserId(null);
-                setupuser({ name: "", email: "", mobile: "" });
-            }
-        } catch (error) {
-            console.error("Erreur lors de la mise à jour de l'utilisateur :", error);
-        }
-    };
-
-    const handleDeleteUser = async (userId) => {
-        try {
-            const response = await axios.delete(`http://localhost:5900/user/${userId}`); // Endpoint correct
-            if (response.status === 200) {
-                setAllUsers((prevUsers) =>
-                    prevUsers.filter((user) => user._id !== userId)
-                );
-            }
-        } catch (error) {
-            console.error("Erreur lors de la suppression de l'utilisateur :", error);
-        }
-    };
-
+            })
     return (
-        <div className="box-gestionuserdash">
+        <div>
             <Sidebar />
+        <div className="box-gestionuserdash">
+            
             <h1>Gestion des Clients</h1>
-            <div className="bodygestionuserdash">
+            <div className='bodygestionuserdash'>
                 <table>
-                    <thead className="tetetabledash">
+                    <thead className='tetetable'>
                         <tr>
-                            <th>Utilisateur</th>
-                            <th>Email</th>
+                            <th>Users</th>
+                            <th>Mail</th>
                             <th>Téléphone Mobile</th>
-                            <th>Paramètres</th>
+                            <th>Settings</th>
                         </tr>
                     </thead>
                     <tbody>
-                        {allusers.map((data) => (
-                            <tr key={data._id}>
-                                <td data-label="Utilisateur">{data.name}</td>
-                                <td data-label="Email">{data.email}</td>
-                                <td data-label="Téléphone Mobile">{data.mobile}</td>
-                                <td data-label="Paramètres">
-                                    <div className="settingsadmindash">
-                                        <button
-                                            className="deletebtndash"
-                                            onClick={() => handleDeleteUser(data._id)}
-                                        >
-                                            Supprimer
-                                        </button>
-                                        <button
-                                            className="updatebtndash"
-                                            onClick={() => {
-                                                setEditingUserId(data._id);
-                                                setupuser({
-                                                    name: data.name || "",
-                                                    email: data.email || "",
-                                                    mobile: data.mobile || "",
-                                                });
-                                            }}
-                                        >
-                                            Modifier
-                                        </button>
-                                    </div>
-                                    {editingUserId === data._id && (
-                                        <div className="updatecarsettingsdash">
-                                            <p>Nom</p>
-                                            <input
-                                                type="text"
-                                                value={upuser.name}
-                                                placeholder="Nom"
-                                                onChange={(e) =>
-                                                    handleUpdateChange("name", e.target.value)
-                                                }
-                                            />
-                                            <p>Email</p>
-                                            <input
-                                                type="text"
-                                                value={upuser.email}
-                                                placeholder="Email"
-                                                onChange={(e) =>
-                                                    handleUpdateChange("email", e.target.value)
-                                                }
-                                            />
-                                            <p>Téléphone Mobile</p>
-                                            <input
-                                                type="text"
-                                                value={upuser.mobile}
-                                                placeholder="Téléphone Mobile"
-                                                onChange={(e) =>
-                                                    handleUpdateChange("mobile", e.target.value)
-                                                }
-                                            />
-                                            <button
-                                                className="btn-up-okdash"
-                                                onClick={() => handleUpdateSubmit(data._id)}
-                                            >
-                                                OK
-                                            </button>
-                                        </div>
-                                    )}
-                                </td>
+                        {allusers?.map((data) => (
+                            <tr >
+                                <td data-label="Utilisateur">{data?.name}</td>
+                                <td data-label="email">{data?.email}</td>
+                                <td data-label="Téléphone Mobile">{data?.mobile}</td>
+                                <td data-label="settings">
+
+                    <div className='settingsadmin'>
+                    <button className='deletebtn' onClick={() => (dispatch(deleteuser(data?._id)))}> Delete</button>
+
+
+                    <button className='updatebtn' onClick={()=> setshowthird(!showthird)}> Update</button>
+                    </div>
+
+                    {showthird? 
+                    (<> 
+                    <div className='updatecarsettings'>
+                     <p>name</p><input type="text" placeholder={data.name} onChange={(e)=>setupuser({name:e.target.value})}/> 
+                     <p>email</p><input type="text" placeholder={data.email} onChange={(e)=>setupuser({email:e.target.value})}/> 
+                     <p>Telephone Mobile</p><input type="text" placeholder={data.mobile} onChange={(e)=>setupuser({mobile:e.target.value})}/> 
+                     <p>Company</p><input type="text" placeholder={data.company} onChange={(e)=>setupuser({company:e.target.value})}/> 
+                     </div> 
+                     <button className="btn-up-ok" onClick={()=>dispatch(updateuser({id:data._id,upuser:upuser}))}>ok</button>
+                     </>):null}
+                </td>
+
                             </tr>
                         ))}
                     </tbody>
                 </table>
+            </div>
             </div>
         </div>
     );

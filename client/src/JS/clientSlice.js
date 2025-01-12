@@ -1,46 +1,43 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-// Thunk to fetch clients
-export const getclient = createAsyncThunk('/getclient', async (_, { rejectWithValue }) => {
+// ---------------- GET Clients -------------------
+export const getclient = createAsyncThunk('client/getclient', async (_, { rejectWithValue }) => {
   try {
-    const resultat = await axios.get('http://localhost:5900/user/all'); // Await for API response
-    return resultat.data; // Assuming the API returns the data in the `data` field
+    const response = await axios.get('http://localhost:5900/user/all');
+    return response.data.user; // Supposons que "user" contient la liste des clients
   } catch (error) {
-    console.error("API Error:", error);
-    return rejectWithValue(error.response?.data || error.message); // Handle error
+    console.error(error);
+    return rejectWithValue(error.response?.data || "Erreur serveur");
   }
 });
 
-// Initial state
+// ---------------- Initial State -----------------
 const initialState = {
-  client: null,
-  status: null,
-  error: null,
+  client: [], // Stocke la liste des utilisateurs
+  status: null, // Status de la requête
+  error: null,  // Stocke les erreurs (si nécessaire)
 };
 
-// Client slice
-export const clientSlice = createSlice({
+// ---------------- Slice -------------------------
+const clientSlice = createSlice({
   name: 'client',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      // Pending
+      // GET Clients
       .addCase(getclient.pending, (state) => {
-        state.status = "pending";
-        state.error = null;
+        state.status = 'loading';
       })
-      // Fulfilled
       .addCase(getclient.fulfilled, (state, action) => {
-        state.status = "success";
-        state.client = action.payload?.user || action.payload; // Adjust based on actual response
+        state.status = 'succeeded';
+        state.client = action.payload; // Stocke les utilisateurs
         state.error = null;
       })
-      // Rejected
       .addCase(getclient.rejected, (state, action) => {
-        state.status = "fail";
-        state.error = action.payload || "Failed to fetch clients.";
+        state.status = 'failed';
+        state.error = action.payload; // Stocke l'erreur
       });
   },
 });

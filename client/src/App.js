@@ -60,7 +60,8 @@ function App() {
         <Route element={<PrivateRoute />}>
           <Route path="/profil" element={<Profil />} />
           <Route path="/checkpasseport" element={<Checkpasseport />} />
-          <Route path="/checkcin" element={<Checkcin />} />
+         
+          <Route path="/dashboard" element={<HomeAdmin/>} /> <Route path="/checkcin" element={<Checkcin />} />
         </Route>{" "}
       </Routes>
     </div>

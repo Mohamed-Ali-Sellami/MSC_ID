@@ -92,5 +92,14 @@ router.post("/login", loginRules(), validation, async (req, res) => {
 router.get("/current", isAuth(), (req, res) => {
   res.status(200).send({ user: req.user });
 });
+router.get('/all', async (req, res) => {
+  try {
+    const result = await User.find(); // Added semicolon
+    res.send({ user: result, msg: "Toutes les clients" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ msg: "Erreur lors de la récupération des clients" }); // Added error response
+  }
+});
 
 module.exports = router;

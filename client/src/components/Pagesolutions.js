@@ -72,6 +72,45 @@ const Pagesolutions = () => {
   </div>
 
 
+<div>
+<div className="containers3solution">
+    <div className="headers3solution">
+        <h1>COMMENT FONCTIONNE LA VÉRIFICATION D'IDENTITÉ GUIDÉE PAR UN EXPERT ?</h1>
+        <h2>Révolutionnez l'entrée en relation grâce à une solution<br/>conforme et une authentification robuste.</h2>
+    </div>
+    
+    <div className="cards-containers3solution">
+        <div className="cards3solution card-skyblue">
+            <div className="card-icons3solution">🔒</div>
+            <h3>Entrée en relation conforme</h3>
+            <p>Respect des réglementations mondiales.</p>
+            <ul>
+                <li>• Création de compte</li>
+                <li>• Enregistrements et inscriptions en ligne</li>
+                <li>• Nouvelles demandes</li>
+            </ul>
+        </div>
+        
+        <div className="cards3solution card-navy">
+            <div className="card-icons3solution">👤</div>
+            <h3>Authentification</h3>
+            <p>Protection des comptes et des données clients.</p>
+            <ul>
+                <li>• Réinitialisation de mot de passe</li>
+                <li>• Changement de coordonnées</li>
+                <li>• Ajout/modification d'un bénéficiaire</li>
+                <li>• Ajout de services complémentaires</li>
+            </ul>
+        </div>
+    </div>
+    </div>
+
+
+</div>
+
+
+
+<Footer/>
   </div>
   )
 }

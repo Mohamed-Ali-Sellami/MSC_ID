@@ -19,7 +19,7 @@
     width: 100%;
     max-width: 100%; 
     margin: 0;
-    padding: 0 2rem; 
+    padding: 0 ; 
 }
 
 .logo-img {
@@ -56,7 +56,9 @@
    
         color: white;
         padding-bottom: 0.5rem;
-        border-bottom: 2px solid
+        border-bottom: 2px solid;
+        text-decoration: none;
+        
     
 }
 

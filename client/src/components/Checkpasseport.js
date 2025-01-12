@@ -12,12 +12,16 @@ const Checkpasseport = () => {
   const [passportDetails, setPassportDetails] = useState(null);
 
   const handleImageChange = (e) => {
-    const file = e.target.files[0];
+    const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
     if (file && file.type.startsWith('image/')) {
       setImage(URL.createObjectURL(file));
     } else {
       alert('Veuillez télécharger un fichier image valide.');
     }
+  };
+
+  const allowDragOver = (e) => {
+    e.preventDefault();
   };
 
   const preprocessImage = (imageSrc, callback) => {
@@ -138,8 +142,12 @@ const Checkpasseport = () => {
 
           <div className="content-wrapper">
             <div className="import-section">
-              <div className="section-box">
-                <h3>Téléchargez votre Image (jpg, png)</h3>
+              <div 
+                className="section-box drop-zone"
+                onDragOver={allowDragOver}
+                onDrop={handleImageChange}
+              >
+                <h3>Importez ou Glissez-Déposez votre Image (jpg, png)</h3>
                 <p className="advice">
                   Assurez-vous que :
                   <ul>
@@ -148,11 +156,22 @@ const Checkpasseport = () => {
                     <li>Aucun reflet ou ombre n'obstrue les données.</li>
                   </ul>
                 </p>
-                <input type="file" accept="image/*" onChange={handleImageChange} />
+                <label className="upload-label" htmlFor="file-upload">
+                  <i className="fas fa-upload"></i> Importer un fichier
+                </label>
+                <input 
+                  id="file-upload" 
+                  type="file" 
+                  accept="image/*" 
+                  onChange={handleImageChange} 
+                  style={{ display: 'none' }}
+                />
                 {image && <img src={image} alt="Uploaded" className="uploaded-image" />}
-                <button onClick={performOCR} disabled={loading}>
-                  {loading ? 'Traitement en cours...' : 'Vérifier Votre Passeport'}
-                </button>
+                {image && (
+                  <button onClick={performOCR} disabled={loading} className='btn-verifpass'>
+                    {loading ? 'Traitement en cours...' : 'Vérifier Votre Passeport'}
+                  </button>
+                )}
               </div>
             </div>
 
