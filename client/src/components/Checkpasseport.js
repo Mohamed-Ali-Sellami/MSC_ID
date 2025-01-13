@@ -1,90 +1,79 @@
-import React, { useState } from 'react';
-import './styles/Checkpasseport.css';
-import Tesseract from 'tesseract.js';
-import Navbar from './Navbar';
-import Footer from './Footer';
+import React, { useState } from "react";
+import "./styles/Checkpasseport.css";
+import Navbar from "./Navbar";
+import Footer from "./Footer";
 
 const Checkpasseport = () => {
   const [image, setImage] = useState(null);
-  const [text, setText] = useState('');
-  const [loading, setLoading] = useState(false);
+  const [recognizedText, setRecognizedText] = useState("");
   const [verificationResult, setVerificationResult] = useState(null);
   const [passportDetails, setPassportDetails] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
-  const handleImageChange = (e) => {
-    const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
-    if (file && file.type.startsWith('image/')) {
-      setImage(URL.createObjectURL(file));
+  const API_KEY = "K85598953388957"; // Remplacez par votre clé API OCR.Space
+
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      setImage(file);
+      setRecognizedText("");
+      setVerificationResult(null);
+      setPassportDetails(null);
+      setError("");
     } else {
-      alert('Veuillez télécharger un fichier image valide.');
+      setError("Veuillez télécharger une image valide.");
     }
   };
 
-  const allowDragOver = (e) => {
-    e.preventDefault();
-  };
-
-  const preprocessImage = (imageSrc, callback) => {
-    const canvas = document.createElement('canvas');
-    const ctx = canvas.getContext('2d');
-    const img = new Image();
-
-    img.src = imageSrc;
-    img.onload = () => {
-      canvas.width = img.width;
-      canvas.height = img.height;
-
-      ctx.drawImage(img, 0, 0, img.width, img.height);
-
-      const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-      const data = imageData.data;
-
-      for (let i = 0; i < data.length; i += 4) {
-        const grayscale = 0.3 * data[i] + 0.59 * data[i + 1] + 0.11 * data[i + 2];
-        data[i] = data[i + 1] = data[i + 2] = grayscale;
-      }
-
-      ctx.putImageData(imageData, 0, 0);
-      callback(canvas.toDataURL());
-    };
-  };
-
-  const performOCR = () => {
+  const handleCheckPassport = async () => {
     if (!image) {
-      alert('Veuillez charger une image avant de continuer.');
+      setError("Veuillez télécharger une image.");
       return;
     }
 
     setLoading(true);
-    setText('');
+    setError("");
     setVerificationResult(null);
     setPassportDetails(null);
 
-    preprocessImage(image, (processedImage) => {
-      Tesseract.recognize(processedImage, 'eng', {
-        logger: (info) => console.log(info),
-      })
-        .then(({ data: { text } }) => {
-          if (!text.trim()) {
-            setVerificationResult("Aucun texte détecté. Assurez-vous que l'image est claire et lisible.");
-          } else {
-            setText(text);
-            processMRZText(text);
-          }
-        })
-        .catch(() => {
-          setVerificationResult("Erreur : Impossible de lire l'image. Vérifiez la qualité du passeport.");
-        })
-        .finally(() => setLoading(false));
-    });
+    const formData = new FormData();
+    formData.append("file", image);
+    formData.append("apikey", API_KEY);
+    formData.append("language", "eng" );
+    formData.append('OCREngine', '2'); // This is to use Engine 2
+    formData.append('scale', true); // This is to use Engine 2
+    formData.append('detectOrientation', true); // This is to use Engine 2
+    formData.append('isTable', true); // This is to use Engine 2
+
+    try {
+      const response = await fetch("https://api.ocr.space/parse/image", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await response.json();
+
+      const parsedText = data.ParsedResults?.[0]?.ParsedText || "";
+      setRecognizedText(parsedText);
+
+      if (parsedText) {
+        analyzePassportData(parsedText);
+      } else {
+        setError("Aucun texte valide trouvé dans l'image.");
+      }
+    } catch {
+      setError("Une erreur est survenue lors de l'analyse de l'image.");
+    } finally {
+      setLoading(false);
+    }
   };
 
-  const processMRZText = (rawText) => {
-    const lines = rawText.split('\n').map((line) => line.trim());
+  const analyzePassportData = (text) => {
+    const lines = text.split("\n").map((line) => line.trim());
     const mrzLines = lines.filter((line) => /^[A-Z0-9<]{44,88}$/.test(line));
 
     if (mrzLines.length < 2) {
-      setVerificationResult('MRZ non détectée ou invalide.');
+      setVerificationResult("MRZ non détectée ou invalide.");
       return;
     }
 
@@ -92,17 +81,17 @@ const Checkpasseport = () => {
     const details = decodeMRZ(line1, line2);
 
     setPassportDetails(details);
-    setVerificationResult(details.isValid ? 'Passeport valide ✅' : 'Passeport invalide ❌');
+    setVerificationResult(details.isValid ? "Passeport valide ✅" : "Passeport invalide ❌");
   };
 
   const decodeMRZ = (line1, line2) => {
-    const surnameAndGivenName = line1.slice(5).split('<<');
-    const surname = surnameAndGivenName[0].replace(/</g, ' ').trim();
-    const givenName = surnameAndGivenName[1]?.replace(/</g, ' ').trim() || '';
-    const passportNumber = line2.slice(0, 9).replace(/</g, '');
+    const surnameAndGivenName = line1.slice(5).split("<<");
+    const surname = surnameAndGivenName[0].replace(/</g, " ").trim();
+    const givenName = surnameAndGivenName[1]?.replace(/</g, " ").trim() || "";
+    const passportNumber = line2.slice(0, 9).replace(/</g, "");
     const dob = formatDate(line2.slice(13, 19));
     const expirationDate = formatDate(line2.slice(21, 27));
-    const nationality = line2.slice(10, 13).replace(/</g, '');
+    const nationality = line2.slice(10, 13).replace(/</g, "");
 
     return {
       surname,
@@ -118,8 +107,8 @@ const Checkpasseport = () => {
   const validateMRZ = (line) => {
     const computeCheckDigit = (data) => {
       const weights = [7, 3, 1];
-      return data.split('').reduce((sum, char, i) => {
-        const value = char >= '0' && char <= '9' ? +char : char === '<' ? 0 : char.charCodeAt(0) - 55;
+      return data.split("").reduce((sum, char, i) => {
+        const value = char >= "0" && char <= "9" ? +char : char === "<" ? 0 : char.charCodeAt(0) - 55;
         return sum + value * weights[i % 3];
       }, 0) % 10;
     };
@@ -142,41 +131,24 @@ const Checkpasseport = () => {
 
           <div className="content-wrapper">
             <div className="import-section">
-              <div 
-                className="section-box drop-zone"
-                onDragOver={allowDragOver}
-                onDrop={handleImageChange}
-              >
-                <h3>Importez ou Glissez-Déposez votre Image (jpg, png)</h3>
-                <p className="advice">
-                  Assurez-vous que :
-                  <ul>
-                    <li>L'image est nette et bien cadrée.</li>
-                    <li>Les informations sur le passeport sont bien visibles.</li>
-                    <li>Aucun reflet ou ombre n'obstrue les données.</li>
-                  </ul>
-                </p>
-                <label className="upload-label" htmlFor="file-upload">
-                  <i className="fas fa-upload"></i> Importer un fichier
-                </label>
-                <input 
-                  id="file-upload" 
-                  type="file" 
-                  accept="image/*" 
-                  onChange={handleImageChange} 
-                  style={{ display: 'none' }}
-                />
-                {image && <img src={image} alt="Uploaded" className="uploaded-image" />}
-                {image && (
-                  <button onClick={performOCR} disabled={loading} className='btn-verifpass'>
-                    {loading ? 'Traitement en cours...' : 'Vérifier Votre Passeport'}
-                  </button>
-                )}
-              </div>
+              <h3>Importez ou Glissez-Déposez votre Image (jpg, png)</h3>
+              <input type="file" accept="image/*" onChange={handleImageUpload} />
+
+              {image && <img src={URL.createObjectURL(image)} alt="Uploaded" className="uploaded-image" />}
+              <button onClick={handleCheckPassport} disabled={loading} className="btn-verifpass">
+                {loading ? "Traitement en cours..." : "Vérifier Votre Passeport"}
+              </button>
             </div>
 
             <div className="details-section">
-              {passportDetails && passportDetails.isValid && (
+              {recognizedText && (
+                <div className="result-box">
+                  <h3>Texte Reconnu :</h3>
+                  <p>{recognizedText}</p>
+                </div>
+              )}
+
+              {passportDetails && (
                 <div className="result-box">
                   <h3>Détails du Passeport :</h3>
                   <p>Nom : {passportDetails.surname}</p>
@@ -191,11 +163,11 @@ const Checkpasseport = () => {
               {verificationResult && (
                 <div className="result-box">
                   <h3>Résultat :</h3>
-                  <p style={{ color: passportDetails?.isValid ? 'green' : 'red' }}>
-                    {verificationResult}
-                  </p>
+                  <p style={{ color: passportDetails?.isValid ? "green" : "red" }}>{verificationResult}</p>
                 </div>
               )}
+
+              {error && <p className="error">{error}</p>}
             </div>
           </div>
         </div>
@@ -206,3 +178,29 @@ const Checkpasseport = () => {
 };
 
 export default Checkpasseport;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
