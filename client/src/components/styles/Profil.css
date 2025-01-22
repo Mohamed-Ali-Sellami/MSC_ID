@@ -47,6 +47,9 @@
 	box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 	text-align: center;
   }
+  .profile-card h2 {
+	font-weight: bold;
+  } 
   
   .avatar-container {
 	margin-bottom: 15px;

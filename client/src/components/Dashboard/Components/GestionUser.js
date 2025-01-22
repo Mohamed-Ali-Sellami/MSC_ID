@@ -37,7 +37,7 @@ const GestionUser = () => {
                     <tbody>
                         {allusers?.map((data) => (
                             <tr >
-                                <td data-label="Utilisateur">{data?.name}</td>
+                                <td data-label="Utilisateur">{data?.name} {data?.lastname}</td>
                                 <td data-label="email">{data?.email}</td>
                                 <td data-label="Téléphone Mobile">{data?.mobile}</td>
                                 <td data-label="settings">
@@ -52,7 +52,11 @@ const GestionUser = () => {
                     {showthird? 
                     (<> 
                     <div className='updatecarsettings'>
-                     <p>name</p><input type="text" placeholder={data.name} onChange={(e)=>setupuser({name:e.target.value})}/> 
+                    <p>{data?.name} {data?.lastname}</p>
+<input
+  type="text"placeholder={`${data?.name} ${data?.lastname}`}value={`${data?.name} ${data?.lastname}`} onChange={(e) => {const [name, lastname] = e.target.value.split(' '); setupuser({ name, lastname }); 
+  }}
+/>
                      <p>email</p><input type="text" placeholder={data.email} onChange={(e)=>setupuser({email:e.target.value})}/> 
                      <p>Telephone Mobile</p><input type="text" placeholder={data.mobile} onChange={(e)=>setupuser({mobile:e.target.value})}/> 
                      <p>Company</p><input type="text" placeholder={data.company} onChange={(e)=>setupuser({company:e.target.value})}/> 

@@ -42,6 +42,11 @@
     margin-right: 2rem; 
 }
 
+.nav-links .Link a{
+    text-decoration: none;
+    border: none;
+}
+
 .nav-item a {
     color: white;
     text-decoration: none;
@@ -51,6 +56,9 @@
     gap: 0.5rem;
     font-weight: bold;
 }
+
+
+
 
 .nav-item a:hover {
    
@@ -67,6 +75,10 @@
     text-decoration: none;
     font-size: 1.5rem; 
     font-weight: bold; 
+}
+.loginbtnnavbar:hover {
+    color: #0066cc;
+    text-decoration: none;
 }
 
 .dropdown-arrow {
@@ -125,7 +137,7 @@ display: none;
 }
 
 /* Mobile Menu Button */
-.mobile-menu-btn {
+.mobile-menu-btn11 {
     display: none;
     background: none;
     border: none;
@@ -165,7 +177,7 @@ display: none;
         padding: 1rem;
     }
 
-    .mobile-menu-btn {
+    .mobile-menu-btn11 {
         display: block;
         z-index: 100;
         margin: 0;

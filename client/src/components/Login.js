@@ -11,7 +11,8 @@ const Login = () => {
     password: "",
   });
 
-  /*exemple login ( mail: ahmed123@gmail.com / password: ahmed123)*/
+  /*exemple loginClient ( mail: ahmed123@gmail.com / password: ahmed123)*/
+  /*exemple loginAdmin (mail:medalisel@gmail.com /password:medalisel)*/
 
 
   const dispatch = useDispatch();

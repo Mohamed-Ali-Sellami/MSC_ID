@@ -74,7 +74,7 @@ const Navbar = ({ hideAuthButtons }) => {
           {/* Menu Mobile */}
           <div className="bars-mobile">
             <button
-              className={`mobile-menu-btn ${isMenuOpen ? 'active' : ''}`}
+              className={`mobile-menu-btn11 ${isMenuOpen ? 'active' : ''}`}
               onClick={toggleMenu}
             >
               <span className="bar"></span>

@@ -84,14 +84,17 @@
     background-color: #4557bb;
     color: white;
     border: none;
+    text-decoration: none;
 }
 
 .btn-secondary {
     border: 2px solid #4557bb;
     color: #4557bb;
     background: transparent;
+    text-decoration: none;
 }
 
 .btn:hover {
     opacity: 0.9;
+    text-decoration: none;
 }

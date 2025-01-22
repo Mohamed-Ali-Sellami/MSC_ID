@@ -53,7 +53,7 @@ const Profile = () => {
           />
           <h2>{`${user?.name || ""} ${user?.lastname || ""}`.trim()}</h2>
           <p className="profile-role">Client MSC</p>
-          <p className="profile-location">San Francisco, CA</p>
+          <p className="profile-location">Tunisia Country</p>
           <div className="button-group">
             <button className="buttonpr">Modifier Profile</button>
             <button className="buttonpr">Contactez-Nous</button>

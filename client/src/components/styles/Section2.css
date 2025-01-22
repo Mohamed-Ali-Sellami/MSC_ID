@@ -87,6 +87,7 @@
 
 .cta-button:hover {
     background-color: #444;
+    text-decoration: none;
 }
 
 

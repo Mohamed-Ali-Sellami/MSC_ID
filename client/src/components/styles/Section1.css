@@ -55,6 +55,7 @@
     gap: clamp(15px, 3vw, 20px);
     align-items: center;
     flex-wrap: wrap;
+    text-decoration: none;
 }
 
 .get-in-touch {
@@ -74,6 +75,7 @@
     transform: translateY(-2px);
     background-color: #3555b8;
     color: white;
+    text-decoration: none;
 }
 
 .see-how {
@@ -88,6 +90,7 @@
 
 .see-how:hover {
     transform: translateX(5px);
+    text-decoration: none;
 }
 
 .see-how::after {
@@ -98,6 +101,7 @@
 
 .see-how:hover::after {
     transform: translateX(5px);
+    text-decoration: none;
 }
 
 .imgsection1 {

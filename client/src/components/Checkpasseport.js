@@ -13,8 +13,26 @@ const Checkpasseport = () => {
 
   const API_KEY = "K85598953388957"; // Remplacez par votre clé API OCR.Space
 
-  const handleImageUpload = (e) => {
+  const handleImageChange = (e) => {
     const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      setImage(file);
+      setRecognizedText("");
+      setVerificationResult(null);
+      setPassportDetails(null);
+      setError("");
+    } else {
+      setError("Veuillez télécharger une image valide.");
+    }
+  };
+
+  const allowDragOver = (e) => {
+    e.preventDefault();
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    const file = e.dataTransfer.files[0];
     if (file && file.type.startsWith("image/")) {
       setImage(file);
       setRecognizedText("");
@@ -40,11 +58,11 @@ const Checkpasseport = () => {
     const formData = new FormData();
     formData.append("file", image);
     formData.append("apikey", API_KEY);
-    formData.append("language", "eng" );
-    formData.append('OCREngine', '2'); // This is to use Engine 2
-    formData.append('scale', true); // This is to use Engine 2
-    formData.append('detectOrientation', true); // This is to use Engine 2
-    formData.append('isTable', true); // This is to use Engine 2
+    formData.append("language", "eng");
+    formData.append("OCREngine", "2");
+    formData.append("scale", true);
+    formData.append("detectOrientation", true);
+    formData.append("isTable", true);
 
     try {
       const response = await fetch("https://api.ocr.space/parse/image", {
@@ -128,33 +146,50 @@ const Checkpasseport = () => {
       <div className="boxpasseportt">
         <div className="containercheckpasseport">
           <h1>Vérifiez Votre Passeport</h1>
-
           <div className="content-wrapper">
-            <div className="import-section">
+            <div 
+              className="section-box drop-zone" 
+              onDragOver={allowDragOver} 
+              onDrop={handleDrop}
+            >
               <h3>Importez ou Glissez-Déposez votre Image (jpg, png)</h3>
-              <input type="file" accept="image/*" onChange={handleImageUpload} />
-
+              <p className="advice">
+                Assurez-vous que :
+                <ul>
+                  <li>L'image est nette et bien cadrée.</li>
+                  <li>Les informations sur le passeport sont bien visibles.</li>
+                  <li>Aucun reflet ou ombre n'obstrue les données.</li>
+                </ul>
+              </p>
+              <label className="upload-label" htmlFor="file-upload">
+                <i className="fas fa-upload"></i> Importer un fichier
+              </label>
+              <input 
+                id="file-upload" 
+                type="file" 
+                accept="image/*" 
+                onChange={handleImageChange} 
+                style={{ display: "none" }}
+              />
               {image && <img src={URL.createObjectURL(image)} alt="Uploaded" className="uploaded-image" />}
-              <button onClick={handleCheckPassport} disabled={loading} className="btn-verifpass">
-                {loading ? "Traitement en cours..." : "Vérifier Votre Passeport"}
-              </button>
+              {image && (
+                <button 
+                  onClick={handleCheckPassport} 
+                  disabled={loading} 
+                  className="btn-verifpass"
+                >
+                  {loading ? "Traitement en cours..." : "Vérifier Votre Passeport"}
+                </button>
+              )}
             </div>
 
             <div className="details-section">
-              {recognizedText && (
-                <div className="result-box">
-                  <h3>Texte Reconnu :</h3>
-                  <p>{recognizedText}</p>
-                </div>
-              )}
-
               {passportDetails && (
                 <div className="result-box">
                   <h3>Détails du Passeport :</h3>
                   <p>Nom : {passportDetails.surname}</p>
                   <p>Prénom : {passportDetails.givenName}</p>
                   <p>Numéro : {passportDetails.passportNumber}</p>
-                  <p>Date de Naissance : {passportDetails.dob}</p>
                   <p>Date d'Expiration : {passportDetails.expirationDate}</p>
                   <p>Nationalité : {passportDetails.nationality}</p>
                 </div>
@@ -164,6 +199,9 @@ const Checkpasseport = () => {
                 <div className="result-box">
                   <h3>Résultat :</h3>
                   <p style={{ color: passportDetails?.isValid ? "green" : "red" }}>{verificationResult}</p>
+                  {passportDetails?.isValid && (
+                    <button className="btn-certificate">Obtenir Votre Certificat</button>
+                  )}
                 </div>
               )}
 
@@ -178,29 +216,3 @@ const Checkpasseport = () => {
 };
 
 export default Checkpasseport;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

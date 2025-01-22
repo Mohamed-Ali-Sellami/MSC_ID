@@ -1,96 +1,219 @@
 import React, { useState } from "react";
-import Tesseract from "tesseract.js";
 import "./styles/Checkcin.css";
 import Navbar from "./Navbar";
+import Footer from "./Footer";
+import Quagga from "quagga";
 
 const Checkcin = () => {
-  const [selectedFile, setSelectedFile] = useState(null);
+  const [rectoImage, setRectoImage] = useState(null);
+  const [versoImage, setVersoImage] = useState(null);
+  const [recognizedText1, setRecognizedText1] = useState("");
+  const [recognizedText2, setRecognizedText2] = useState("");
+  const [verificationResult, setVerificationResult] = useState(null);
   const [loading, setLoading] = useState(false);
-  const [detectedText, setDetectedText] = useState("");
-  const [isCINValid, setIsCINValid] = useState(null);
+  const [error, setError] = useState("");
 
-  // Vérification du CIN
-  const verifyCIN = (cin) => {
-    if (!/^\d{8}$/.test(cin)) {
-      return false; // Le CIN doit contenir exactement 8 chiffres
-    }
+  const API_KEY = "K85598953388957"; // Remplacez par votre clé API OCR.Space
 
-    let checksum = 0;
-    for (let i = 0; i < 7; i++) {
-      const digit = parseInt(cin[i], 10);
-      checksum += digit * (8 - i);
-    }
-    const checkDigit = checksum % 10 === 0 ? 0 : 10 - (checksum % 10);
-    return checkDigit === parseInt(cin[7], 10);
-  };
-
-  // Gérer le téléchargement du fichier
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    setSelectedFile(file);
-    setDetectedText("");
-    setIsCINValid(null);
-  };
-
-  // Traiter l'image avec Tesseract.js
-  const handleProcessFile = () => {
-    if (!selectedFile) {
-      alert("Veuillez télécharger une image !");
-      return;
-    }
-
+  const handleRectoUpload = async (file) => {
     setLoading(true);
-    setDetectedText("");
-    setIsCINValid(null);
+    setError("");
+    setVerificationResult(null);
 
-    Tesseract.recognize(selectedFile, "fra", {
-      logger: (m) => console.log(m), // Suivi du traitement OCR
-    })
-      .then(({ data: { text } }) => {
-        console.log("Texte détecté :", text); // Vérifier tout le texte extrait
-        setDetectedText(text);
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("apikey", API_KEY);
+    formData.append("OCREngine", "2");
+    formData.append("scale", true);
+    formData.append("detectOrientation", true);
+    formData.append("isTable", true);
 
-        // Vérification du CIN
-        const cinMatch = text.match(/\b\d{8}\b/); // CIN est une séquence de 8 chiffres
-        if (cinMatch) {
-          const cin = cinMatch[0];
-          setIsCINValid(verifyCIN(cin));
-        } else {
-          alert("Numéro de CIN introuvable !");
-        }
-      })
-      .catch((error) => {
-        console.error("Erreur lors du traitement OCR :", error);
-      })
-      .finally(() => {
-        setLoading(false);
+    try {
+      const response = await fetch("https://api.ocr.space/parse/image", {
+        method: "POST",
+        body: formData,
       });
+      const data = await response.json();
+
+      const parsedText = data.ParsedResults?.[0]?.ParsedText || "";
+      const first8Digits = parsedText.match(/\d{8}/)?.[0] || "";
+
+      if (first8Digits) {
+        setRecognizedText1(first8Digits);
+      } else {
+        setError("Aucun texte valide détecté dans l'image recto.");
+      }
+    } catch {
+      setError("Une erreur est survenue lors de l'analyse de l'image recto.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleVersoUpload = async (file) => {
+    setLoading(true);
+    setError("");
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const imgData = event.target.result;
+
+      Quagga.decodeSingle(
+        {
+          src: imgData,
+          numOfWorkers: 0,
+          inputStream: {
+            size: 1280,
+          },
+          locator: {
+            halfSample: true,
+            patchSize: "medium",
+          },
+          decoder: {
+            readers: ["code_128_reader", "ean_reader", "upc_reader", "i2of5_reader"],
+          },
+          locate: true,
+          debug: true,
+        },
+        (result) => {
+          if (result && result.codeResult) {
+            const first8Digits = result.codeResult.code.match(/\d{8}/)?.[0] || "";
+            if (first8Digits) {
+              setRecognizedText2(first8Digits);
+            } else {
+              setError("Aucun code-barres valide détecté.");
+            }
+          } else {
+            setError("Impossible de lire le code-barres.");
+          }
+          setLoading(false);
+        }
+      );
+    };
+
+    reader.readAsDataURL(file);
+  };
+
+  const verifyData = () => {
+    if (recognizedText1 && recognizedText2) {
+      setVerificationResult(
+        recognizedText1 === recognizedText2
+          ? "Votre Carte d'identité est Valide ✅"
+          : "Votre Carte d'identité est Invalide ❌"
+      );
+    } else {
+      setError("Veuillez compléter les étapes pour valider les données.");
+    }
+  };
+
+  const handleFileChange = (e, type) => {
+    const file = e.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      if (type === "recto") {
+        setRectoImage(file);
+        handleRectoUpload(file);
+      } else if (type === "verso") {
+        setVersoImage(file);
+        handleVersoUpload(file);
+      }
+      setError("");
+    } else {
+      setError("Veuillez télécharger une image valide.");
+    }
   };
 
   return (
-    <div>
-      <Navbar/>
-    <div className="containercin">
-      <h1>Vérification de CIN</h1>
-      <p> Upload une image de votre CIN Tunisian pour vérifier son existence et sa validité.</p>
-      <input type="file" accept="image/*" onChange={handleFileUpload} />
-      <button onClick={handleProcessFile} disabled={loading}>
-        {loading ? "Traitement en cours..." : "Vérifier"}
-      </button>
+    <div className="boxcin">
+      <Navbar />
+      <div className="boxcheckcin">
+        <div className="containercheckcin">
+          <h1>Vérifiez Votre Carte d'Identité</h1>
+          <p>Suivez les instructions ci-dessous pour télécharger les images :</p>
+          <div className="renseignement-upluod">
+            <li>Assurez-vous que les deux images sont bien éclairées et nettes.</li>
+            <li> placez le code-barres bien au centre de l'image.</li>
+          </div>
+          <div className="content-wrapper">
+            <div className="upload-section">
+              <h3>Importez la Photo Recto (Coté Image)</h3>
+              <label className="upload-area">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleFileChange(e, "recto")}
+                  style={{ display: "none" }}
+                />
+                <div className="upload-icon"><i class="fa-solid fa-file-import"></i></div>
+                <div className="upload-text">
+                  Importez votre image ici
+                </div>
+              </label>
+              {rectoImage && (
+                <img
+                  src={URL.createObjectURL(rectoImage)}
+                  alt="Recto"
+                  className="uploaded-image"
+                />
+              )}
+              {recognizedText1 && (
+                <div className="result-box">
+                  <h3>Texte Reconnu (Recto)</h3>
+                  <p>{recognizedText1}</p>
+                </div>
+              )}
+            </div>
 
-      {detectedText && (
-        <div>
-          <h3>Texte détecté :</h3>
-          <pre>{detectedText}</pre>
-        </div>
-      )}
+            <div className="upload-section">
+              <h3>Importez la Photo Verso (Coté Code-barres)</h3>
+              <label className="upload-area">
+                <input
+                  type="file"
+                  accept="image/*"
+                  onChange={(e) => handleFileChange(e, "verso")}
+                  style={{ display: "none" }}
+                />
+                <div className="upload-icon"><i class="fa-solid fa-file-import"></i></div>
+                <div className="upload-text">
+                Importez votre image ici
+                </div>
+              </label>
+              {versoImage && (
+                <img
+                  src={URL.createObjectURL(versoImage)}
+                  alt="Verso"
+                  className="uploaded-image"
+                />
+              )}
+              {recognizedText2 && (
+                <div className="result-box">
+                  <h3>Texte Reconnu (Verso)</h3>
+                  <p>{recognizedText2}</p>
+                </div>
+              )}
+            </div>
+          </div>
 
-      {isCINValid !== null && (
-        <div className={`result ${isCINValid ? "valid" : "invalid"}`}>
-          {isCINValid ? "CIN Valide ✅" : "CIN Invalide ❌"}
+          <button
+            onClick={verifyData}
+            disabled={loading}
+            className="btn-verify"
+          >
+            {loading ? "Traitement en cours..." : "Vérifier les Données"}
+          </button>
+
+          {verificationResult && (
+            <div className="result-box">
+              <h3>Résultat :</h3>
+              <p>
+                {verificationResult}
+              </p>
+            </div>
+          )}
+
+          {error && <p className="error">{error}</p>}
         </div>
-      )}
-    </div>
+      </div>
+      <Footer />
     </div>
   );
 };
