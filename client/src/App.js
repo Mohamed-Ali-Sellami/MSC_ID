@@ -16,6 +16,8 @@ import Pagesolutions from "./components/Pagesolutions";
 import HomeAdmin from "./components/Dashboard/Components/HomeAdmin";
 import GestionUser from "./components/Dashboard/Components/GestionUser";
 import { getclient } from "./JS/clientSlice";
+import Contact from "./components/Contact";
+
 function App() {
   const isAuth = localStorage.getItem("token");
   const dispatch = useDispatch();
@@ -47,6 +49,7 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/solutions" element={<Pagesolutions />} />
+        <Route path="/contact" element={<Contact />} />
 
 
 
