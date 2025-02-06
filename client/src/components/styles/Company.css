@@ -1,0 +1,56 @@
+.company-container {
+    text-align: center;
+    padding: 50px 20px;
+    background-color:  rgb(17, 10, 51);
+    margin-top: 50px;
+}
+
+.company-container h1 {
+    font-size: 40px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 10px;
+}
+
+.founded-year {
+    font-size: 20px;
+    color: white;
+    font-style: italic;
+    margin-bottom: 30px;
+}
+
+.company-info {
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.company-info h2 {
+    font-size: 22px;
+    color: #007bff;
+    margin-bottom: 10px;
+}
+
+.company-info p, .company-info ul {
+    font-size: 16px;
+    color: #666;
+    line-height: 1.5;
+}
+
+.company-info ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.company-info li {
+    background: #007bff;
+    color: white;
+    padding: 8px;
+    border-radius: 5px;
+    margin: 5px 0;
+}

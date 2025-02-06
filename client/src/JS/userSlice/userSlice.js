@@ -2,31 +2,31 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 
 // Thunk for user registration
-export const userRegister = createAsyncThunk("user/register", async (user) => {
+export const userRegister = createAsyncThunk("user/register", async (user, { rejectWithValue }) => {
   try {
-    let response = await axios.post("http://localhost:5900/user/register", user);
+    const response = await axios.post("http://localhost:5900/user/register", user);
     return response.data;
   } catch (error) {
     console.error(error);
-    throw error;
+    return rejectWithValue(error.response?.data || "Registration failed");
   }
 });
 
 // Thunk for user login
-export const userLogin = createAsyncThunk("user/login", async (user) => {
+export const userLogin = createAsyncThunk("user/login", async (user, { rejectWithValue }) => {
   try {
-    let response = await axios.post("http://localhost:5900/user/login", user);
+    const response = await axios.post("http://localhost:5900/user/login", user);
     return response.data;
   } catch (error) {
     console.error(error);
-    throw error;
+    return rejectWithValue(error.response?.data || "Login failed");
   }
 });
 
 // Thunk for getting the current user
-export const userCurrent = createAsyncThunk("user/current", async () => {
+export const userCurrent = createAsyncThunk("user/current", async (_, { rejectWithValue }) => {
   try {
-    let response = await axios.get("http://localhost:5900/user/current", {
+    const response = await axios.get("http://localhost:5900/user/current", {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -34,46 +34,41 @@ export const userCurrent = createAsyncThunk("user/current", async () => {
     return response.data;
   } catch (error) {
     console.error(error);
-    throw error;
+    return rejectWithValue(error.response?.data || "Failed to get current user");
+  }
+});
+
+// Thunk for updating the user profile
+export const updateuser = createAsyncThunk("user/update", async ({ id, updatedData }, { rejectWithValue }) => {
+  try {
+    const response = await axios.put(`http://localhost:5900/user/${id}`, updatedData);
+    return response.data;
+  } catch (error) {
+    console.error(error);
+    return rejectWithValue(error.response?.data || "Update failed");
   }
 });
 
 // Thunk for deleting a user
-export const deleteuser = createAsyncThunk("user/delete", async (id) => {
+export const deleteuser = createAsyncThunk("user/delete", async (id, { rejectWithValue }) => {
   try {
-    let response = await axios.delete(`http://localhost:5900/user/${id}`);
-    return response.data;
+    await axios.delete(`http://localhost:5900/user/${id}`);
+    return id; // Retourner l'ID pour le retirer du state
   } catch (error) {
     console.error(error);
-    throw error;
+    return rejectWithValue(error.response?.data || "Delete failed");
   }
 });
-
-// Thunk for updating a user
-export const updateuser = createAsyncThunk(
-  "user/update",
-  async ({ id, updatedData }) => {
-    try {
-      let response = await axios.put(
-        `http://localhost:5900/user/${id}`,
-        updatedData
-      );
-      return response.data;
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-);
 
 // Initial state
 const initialState = {
   user: null,
   status: null,
+  error: null,
 };
 
 // User slice
-export const userSlice = createSlice({
+const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
@@ -82,70 +77,79 @@ export const userSlice = createSlice({
       localStorage.removeItem("token");
     },
   },
-  extraReducers: {
-    // Register
-    [userRegister.pending]: (state) => {
-      state.status = "pending";
-    },
-    [userRegister.fulfilled]: (state, action) => {
-      state.status = "success";
-      state.user = action.payload.newUserToken;
-      localStorage.setItem("token", action.payload.token);
-    },
-    [userRegister.rejected]: (state) => {
-      state.status = "fail";
-    },
+  extraReducers: (builder) => {
+    builder
+      // Register
+      .addCase(userRegister.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(userRegister.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = action.payload.newUserToken;
+        localStorage.setItem("token", action.payload.token);
+      })
+      .addCase(userRegister.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
 
-    // Login
-    [userLogin.pending]: (state) => {
-      state.status = "pending";
-    },
-    [userLogin.fulfilled]: (state, action) => {
-      state.status = "success";
-      state.user = action.payload.user;
-      localStorage.setItem("token", action.payload.token);
-    },
-    [userLogin.rejected]: (state) => {
-      state.status = "fail";
-    },
+      // Login
+      .addCase(userLogin.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(userLogin.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = action.payload.user;
+        localStorage.setItem("token", action.payload.token);
+      })
+      .addCase(userLogin.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
 
-    // Current user
-    [userCurrent.pending]: (state) => {
-      state.status = "pending";
-    },
-    [userCurrent.fulfilled]: (state, action) => {
-      state.status = "success";
-      state.user = action.payload.user;
-    },
-    [userCurrent.rejected]: (state) => {
-      state.status = "fail";
-    },
+      // Current user
+      .addCase(userCurrent.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(userCurrent.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.user = action.payload.user;
+      })
+      .addCase(userCurrent.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
 
-    // Delete user
-    [deleteuser.pending]: (state) => {
-      state.status = "pending";
-    },
-    [deleteuser.fulfilled]: (state, action) => {
-      state.status = "success";
-      state.user = state.user.filter((u) => u._id !== action.payload._id);
-    },
-    [deleteuser.rejected]: (state) => {
-      state.status = "fail";
-    },
+      // Update user
+      .addCase(updateuser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateuser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        if (state.user && state.user._id === action.payload._id) {
+          state.user = action.payload; // Update user if they are logged in
+        }
+      })
+      .addCase(updateuser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      })
 
-    // Update user
-    [updateuser.pending]: (state) => {
-      state.status = "pending";
-    },
-    [updateuser.fulfilled]: (state, action) => {
-      state.status = "success";
-      state.user = state.user.map((u) =>
-        u._id === action.payload._id ? action.payload : u
-      );
-    },
-    [updateuser.rejected]: (state) => {
-      state.status = "fail";
-    },
+      // Delete user
+      .addCase(deleteuser.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteuser.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        if (state.user && state.user._id === action.payload) {
+          state.user = null; // Supprimer l'utilisateur actuel si c'est lui
+          localStorage.removeItem("token");
+        }
+      })
+      .addCase(deleteuser.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.payload;
+      });
   },
 });
 

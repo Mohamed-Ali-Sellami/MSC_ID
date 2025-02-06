@@ -4,6 +4,8 @@ import Footer from './Footer'
 import Navbar from './Navbar'
 import imgpasseport from './images/passeport.jpg';
 import imgcin from './images/cin.png'
+import imgsign from './images/sign.jpg'
+import { Link } from 'react-router-dom';
 
 const Pagesolutions = () => {
   return (
@@ -30,9 +32,9 @@ const Pagesolutions = () => {
           markets and allow for seamless integration with your existing IT environment.
         </p>
 
-        <button className="cta-buttonsolution">
+         <Link to="/login"><button className="cta-buttonsolution">
           Get Started
-        </button>
+        </button></Link>
       </div>
       <div className="image-sectionsolution">
         <img 
@@ -52,21 +54,21 @@ const Pagesolutions = () => {
         <div className="iconsection2solution"> <img src={imgpasseport} alt='imgpasseport'  /> </div>
         <h2>Passeport verification</h2>
         <p>Our powerful document capture tools allow for the capture and storage of all types of ID documents, using a computer or smartphone. A quick, guided process enables users to capture perfectly sharp and uncropped images in real time, and with ease.</p>
-        <a href="#" className="learn-moresection2solution">Learn more</a>
+        
       </div>
 
       <div className="stepsection2solution">
         <div className="iconsection2solution"> <img src={imgcin} alt='imgcin'  /> </div>
         <h2>Carte_identity Verification</h2>
         <p>Our deep learning technology extracts and analyses document information in real time. This means that you obtain a verdict on the authenticity and validity of any document within less than 12 seconds. In case of an incomplete analysis, fraud experts take over.</p>
-        <a href="#" className="learn-moresection2solution">Learn more</a>
+       
       </div>
 
       <div className="stepsection2solution">
-        <div className="iconsection2solution" >  <img src="https://cdn4.iconfinder.com/data/icons/web-and-seo-19/65/906-512.png"alt='imgsignature'  /> </div>
-        <h2>signature verification</h2>
+        <div className="iconsection2solution" >  <img src={imgsign}alt='imgsignature'  /> </div>
+        <h2>Signature verification (Soon)</h2>
         <p>Gain a reliable and robust remote KYC process to combat identity theft effectively. Our facial recognition tools include selfie and video to verify the authenticity of ID documents, and to make sure the uploader is who they claim to be.</p>
-        <a href="#" className="learn-moresection2solution">Learn more</a>
+       
       </div>
     </div>
   </div>

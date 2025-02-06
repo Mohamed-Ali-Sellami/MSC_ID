@@ -56,7 +56,7 @@ const Profile = () => {
           <p className="profile-location">Tunisia Country</p>
           <div className="button-group">
             <button className="buttonpr">Modifier Profile</button>
-            <button className="buttonpr">Contactez-Nous</button>
+            <Link to="/contact"> <button className="buttonpr">Contactez-Nous</button></Link>
           </div>
         </section>
 

@@ -1,43 +1,62 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import axios from 'axios';
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 
 // ---------------- GET Clients -------------------
-export const getclient = createAsyncThunk('client/getclient', async (_, { rejectWithValue }) => {
+export const getclient = createAsyncThunk("client/getclient", async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get('http://localhost:5900/user/all');
-    return response.data.user; // Supposons que "user" contient la liste des clients
+    const response = await axios.get("http://localhost:5900/user/all");
+    return response.data.user; // Assuming "user" contains the list of clients
   } catch (error) {
     console.error(error);
-    return rejectWithValue(error.response?.data || "Erreur serveur");
+    return rejectWithValue(error.response?.data || "Failed to fetch clients");
+  }
+});
+
+// ---------------- DELETE Client -------------------
+export const deleteclient = createAsyncThunk("client/deleteclient", async (id, { rejectWithValue }) => {
+  try {
+    await axios.delete(`http://localhost:5900/user/${id}`);
+    return id; // Return deleted user ID to update state
+  } catch (error) {
+    console.error(error);
+    return rejectWithValue(error.response?.data || "Failed to delete client");
   }
 });
 
 // ---------------- Initial State -----------------
 const initialState = {
-  client: [], // Stocke la liste des utilisateurs
-  status: null, // Status de la requête
-  error: null,  // Stocke les erreurs (si nécessaire)
+  client: [], // Stores the list of users
+  status: null, // Request status
+  error: null, // Stores errors (if needed)
 };
 
 // ---------------- Slice -------------------------
 const clientSlice = createSlice({
-  name: 'client',
+  name: "client",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
       // GET Clients
       .addCase(getclient.pending, (state) => {
-        state.status = 'loading';
+        state.status = "loading";
       })
       .addCase(getclient.fulfilled, (state, action) => {
-        state.status = 'succeeded';
-        state.client = action.payload; // Stocke les utilisateurs
+        state.status = "succeeded";
+        state.client = action.payload;
         state.error = null;
       })
       .addCase(getclient.rejected, (state, action) => {
-        state.status = 'failed';
-        state.error = action.payload; // Stocke l'erreur
+        state.status = "failed";
+        state.error = action.payload;
+      })
+
+      // DELETE Client
+      .addCase(deleteclient.fulfilled, (state, action) => {
+        state.client = state.client.filter((user) => user._id !== action.payload);
+      })
+      .addCase(deleteclient.rejected, (state, action) => {
+        state.error = action.payload;
       });
   },
 });

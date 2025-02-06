@@ -3,6 +3,8 @@ const router = express.Router();
 const bcrypt = require("bcrypt");
 const User = require("../models/User");
 const jwt = require("jsonwebtoken");
+const userRouter = express.Router();
+
 const {
   registerRules,
   loginRules,
@@ -99,6 +101,35 @@ router.get('/all', async (req, res) => {
   } catch (error) {
     console.log(error);
     res.status(500).send({ msg: "Erreur lors de la récupération des clients" }); // Added error response
+  }
+});
+
+// Delete user
+router.delete('/:id', async (req, res) => {
+  try {
+    const result = await User.findByIdAndDelete(req.params.id); // Simplified the findByIdAndDelete method call
+    if (!result) {
+      return res.status(404).send({ msg: "user non trouvée" });
+    }
+    res.send({ user: result, msg: "user détruite" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ msg: "Erreur lors de la suppression de la user" });
+  }
+});
+
+
+// Update user
+router.put('/:id', async (req, res) => {
+  try {
+    const result = await User.findByIdAndUpdate(req.params.id, { $set: req.body }, { new: true }); 
+    if (!result) {
+      return res.status(404).send({ msg: "user non trouvée" });
+    }
+    res.send({ user: result, msg: "user mise à jour" });
+  } catch (error) {
+    console.log(error);
+    res.status(500).send({ msg: "Erreur lors de la mise à jour de user" });
   }
 });
 

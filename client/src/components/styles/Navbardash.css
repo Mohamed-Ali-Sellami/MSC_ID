@@ -1,0 +1,20 @@
+.navbardash {
+    background-color: rgb(13, 7, 44);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: fixed;
+    width: 100%; 
+    top: 0;
+    z-index: 1000;
+    height: 80px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0;
+    margin: 0;
+}
+.nav-content {
+    display: flex;
+    align-items: center;
+    justify-content:space-between; 
+    margin-left: 0; 
+}

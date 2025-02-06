@@ -17,6 +17,7 @@ import HomeAdmin from "./components/Dashboard/Components/HomeAdmin";
 import GestionUser from "./components/Dashboard/Components/GestionUser";
 import { getclient } from "./JS/clientSlice";
 import Contact from "./components/Contact";
+import Company from "./components/Company";
 
 function App() {
   const isAuth = localStorage.getItem("token");
@@ -49,6 +50,7 @@ function App() {
         <Route exact path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
         <Route path="/solutions" element={<Pagesolutions />} />
+        <Route path="/company" element={<Company />} />
         <Route path="/contact" element={<Contact />} />
 
 

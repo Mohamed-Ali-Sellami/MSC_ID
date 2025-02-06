@@ -10,6 +10,7 @@
     flex-direction: row;
     justify-content: space-between;
     overflow: auto;
+   
   }
   
   .sidebardash {
@@ -42,7 +43,7 @@
   }
   
   .contentdash {
-    width: 80%;
+    width: 100%;
     flex-grow: 1;
     padding: 20px;
     background-color: #f7fafc;
@@ -111,17 +112,39 @@
   /********************************Gestion users***************************/
   
   .box-gestionuserdash {
-    margin-left: 350px;
+    width: 100%;
+    margin-top: 80px;
   }
+
+
+
+  .box-gestionuserdash input[type="text"] {
+    width: 100%;
+    max-width: 300px;
+    padding: 10px;
+    margin: 10px 0;
+    border: 2px solid #007bff;
+    border-radius: 5px;
+    outline: none;
+    font-size: 16px;
+    transition: all 0.3s ease-in-out;
+}
+
+.box-gestionuserdash input[type="text"]:focus {
+    border-color: #0056b3;
+    box-shadow: 0 0 8px rgba(0, 123, 255, 0.5);
+}
+
+
   .box-gestionuserdash h1 {
     width: 100%;
-    color: white;
+    color: #16325b;
     text-align: center;
     align-items: center;
     padding-top: 50px;
     margin-bottom: 20px;
     margin-top: 20px;
-    background-color: #16325b;
+    background-color: white;
     height: 100px;
   }
   
@@ -129,6 +152,7 @@
     width: 100%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
+    
   }
   th,
   td {
@@ -190,7 +214,7 @@
     margin-left: 500px;
   }
   
-  /****************************************ADD CAR******************************/
+  /****************************************ADD User******************************/
   
   .form {
     background-color: #16325b;
@@ -229,6 +253,7 @@
   .settingsadmin {
     display: flex;
     justify-content: space-around;
+    padding: 0;
   }
   .deletebtn {
     background-color: red;
@@ -289,3 +314,71 @@
     padding-left: 500px;
   }
   
+  /*********************************Update*********************************************/
+  .updatecarsettings {
+    width: 400px;
+    margin: 20px auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.updatecarsettings h2 {
+    margin-bottom: 15px;
+    font-size: 1.5em;
+    color: #333;
+}
+
+.updatecarsettings label {
+    display: block;
+    text-align: left;
+    font-weight: bold;
+    margin: 10px 0 5px;
+    color: #555;
+}
+
+.updatecarsettings input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 1em;
+    margin-bottom: 10px;
+    transition: border-color 0.3s;
+}
+
+.updatecarsettings input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+.updatecarsettings button {
+    width: 48%;
+    padding: 10px;
+    font-size: 1em;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background-color 0.3s;
+}
+
+.btn-up-ok {
+    background-color: #28a745;
+    color: white;
+}
+
+.btn-up-ok:hover {
+    background-color: #218838;
+}
+
+.btn-cancel {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-cancel:hover {
+    background-color: #c82333;
+}
