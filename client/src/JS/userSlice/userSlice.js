@@ -4,7 +4,7 @@ import axios from "axios";
 // Thunk for user registration
 export const userRegister = createAsyncThunk("user/register", async (user, { rejectWithValue }) => {
   try {
-    const response = await axios.post("msc-id.vercel.app/user/register", user);
+    const response = await axios.post("msc-id-mohamed-alis-projects-8660c8bc.vercel.app/user/register", user);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -15,7 +15,7 @@ export const userRegister = createAsyncThunk("user/register", async (user, { rej
 // Thunk for user login
 export const userLogin = createAsyncThunk("user/login", async (user, { rejectWithValue }) => {
   try {
-    const response = await axios.post("msc-id.vercel.app/user/login", user);
+    const response = await axios.post("msc-id-mohamed-alis-projects-8660c8bc.vercel.app/user/login", user);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -26,7 +26,7 @@ export const userLogin = createAsyncThunk("user/login", async (user, { rejectWit
 // Thunk for getting the current user
 export const userCurrent = createAsyncThunk("user/current", async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get("msc-id.vercel.app/user/current", {
+    const response = await axios.get("msc-id-mohamed-alis-projects-8660c8bc.vercel.app/user/current", {
       headers: {
         Authorization: localStorage.getItem("token"),
       },
@@ -41,7 +41,7 @@ export const userCurrent = createAsyncThunk("user/current", async (_, { rejectWi
 // Thunk for updating the user profile
 export const updateuser = createAsyncThunk("user/update", async ({ id, updatedData }, { rejectWithValue }) => {
   try {
-    const response = await axios.put(`msc-id.vercel.app/user/${id}`, updatedData);
+    const response = await axios.put(`msc-id-mohamed-alis-projects-8660c8bc.vercel.app/user/${id}`, updatedData);
     return response.data;
   } catch (error) {
     console.error(error);
@@ -52,7 +52,7 @@ export const updateuser = createAsyncThunk("user/update", async ({ id, updatedDa
 // Thunk for deleting a user
 export const deleteuser = createAsyncThunk("user/delete", async (id, { rejectWithValue }) => {
   try {
-    await axios.delete(`msc-id.vercel.app/user/${id}`);
+    await axios.delete(`msc-id-mohamed-alis-projects-8660c8bc.vercel.app/user/${id}`);
     return id; // Retourner l'ID pour le retirer du state
   } catch (error) {
     console.error(error);
