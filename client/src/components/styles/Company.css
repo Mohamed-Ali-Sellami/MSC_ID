@@ -32,7 +32,7 @@
 
 .company-info h2 {
     font-size: 22px;
-    color: #007bff;
+    color: rgb(17, 10, 51);
     margin-bottom: 10px;
 }
 
@@ -48,7 +48,7 @@
 }
 
 .company-info li {
-    background: #007bff;
+    background:rgb(17, 10, 51);
     color: white;
     padding: 8px;
     border-radius: 5px;
