@@ -4,7 +4,7 @@ import axios from "axios";
 // ---------------- GET Clients -------------------
 export const getclient = createAsyncThunk("client/getclient", async (_, { rejectWithValue }) => {
   try {
-    const response = await axios.get("https://msc-id-mohamed-alis-projects-8660c8bc.vercel.app/user/all");
+    const response = await axios.get("msc-id.vercel.app/user/all");
     return response.data.user; // Assuming "user" contains the list of clients
   } catch (error) {
     console.error(error);
@@ -15,7 +15,7 @@ export const getclient = createAsyncThunk("client/getclient", async (_, { reject
 // ---------------- DELETE Client -------------------
 export const deleteclient = createAsyncThunk("client/deleteclient", async (id, { rejectWithValue }) => {
   try {
-    await axios.delete(`https://msc-id-mohamed-alis-projects-8660c8bc.vercel.app/user/${id}`);
+    await axios.delete(`msc-id.vercel.app/user/${id}`);
     return id; // Return deleted user ID to update state
   } catch (error) {
     console.error(error);
