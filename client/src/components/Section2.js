@@ -29,7 +29,7 @@ const Section2 = () => {
     <div className="heros2">
         <h1>Identity verification that's simple for customers but strong against fraud</h1>
         <p>Access comprehensive insights, data, and tools to detect deepfakes and prevent fraud quickly.</p>
-        <a href="#" className="cta-button">Discover MSC Solutions</a>
+           <Link to="/solutions"><a href="#" className="cta-button">Discover MSC Solutions</a></Link>
        
     </div>
     
