@@ -1,5 +1,6 @@
 import React from 'react'
 import './styles/Section2.css'
+import { Link } from "react-router-dom";
 const Section2 = () => {
   return (
     <div>
