@@ -54,7 +54,9 @@ function App() {
         <Route path="/company" element={<Company />} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/verification" element={<Verif />} />
-
+        <Route path="/profil" element={<Profil />} />
+        <Route path="/checkpasseport" element={<Checkpasseport />} />
+        <Route path="/checkcin" element={<Checkcin />} />
 
 
         {/* dashboard */}

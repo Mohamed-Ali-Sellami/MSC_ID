@@ -95,6 +95,24 @@
 display: none;
 
 }
+
+.btnrg {
+    background-color: #4557bb;
+    color: white;
+    padding: clamp(10px, 2vw, 12px) clamp(20px, 4vw, 30px);
+    border-radius: 25px;
+    text-decoration: none;
+    font-size: clamp(14px, 2vw, 16px);
+    font-weight: 500;
+    border: none;
+    transition: transform 0.3s ease, background-color 0.3s ease;
+    white-space: nowrap;
+}
+
+.btnrg:hover {
+    opacity: 0.9;
+    text-decoration: none;
+}
 .btn {
     padding: 0.5rem 1rem;
     border-radius: 25px;
@@ -164,7 +182,7 @@ display: none;
         gap: 0.5rem;
     }
     
-    .btn {
+    .btnrg {
         padding: 0.5rem 0.75rem;
         font-size: 0.9rem;
         border-radius: 25px;
@@ -227,7 +245,8 @@ display: none;
         margin-bottom: 2rem;
     }
 
-    .btn {
+    .btnrg {
+        display: none;
         width: 100%;
         justify-content: center;
     }
