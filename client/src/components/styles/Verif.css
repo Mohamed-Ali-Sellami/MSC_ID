@@ -1,0 +1,107 @@
+.containerverif {
+    display: flex;
+    align-items: center; /* Centre verticalement */
+    justify-content: space-between; /* Équilibre l'espace */
+    margin-top: 100px;
+    padding: 0 5%; /* Ajoute un peu d'espace sur les côtés */
+    font-family: Arial, sans-serif;
+  }
+  
+  .main-contentverif {
+    flex: 1;
+    max-width: 50%; /* Limite la largeur du texte */
+  }
+  
+  .main-contentverif h1 {
+     font-size: 50px;
+     font-weight: bold;
+  }
+  
+  .main-contentverif p {
+    color: #666;
+    font-size: 25px;
+  }
+  
+  .main-contentverif ul {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .main-contentverif ul li {
+    margin: 10px 0;
+    font-size: 20px;
+  }
+  
+  .main-contentverif .btnveriff {
+    background-color: rgb(13, 7, 44);
+      color: white;
+      padding: clamp(10px, 2vw, 12px) clamp(20px, 4vw, 30px);
+      border-radius: 25px;
+      text-decoration: none;
+      font-size: clamp(14px, 2vw, 16px);
+      font-weight: 500;
+      border: none;
+      transition: transform 0.3s ease, background-color 0.3s ease;
+      white-space: nowrap;
+  }
+  .main-contentverif .btnveriff:hover {
+    transform: translateY(-2px);
+      background-color: #3555b8;
+      color: white;
+      text-decoration: none;
+  }
+  
+  .imageverif {
+    max-width: 40%; /* Réduit l'espace de l'image */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .imageverif img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover; /* Ajuste l'image pour bien remplir */
+    border-radius: 10px; /* Adoucit les bords */
+  }
+  
+  
+  .containerverif2 {
+    display: flex;
+    align-items: center; /* Centre verticalement */
+    justify-content: space-between; /* Équilibre l'espace */
+    height: 100vh;
+    padding: 0 5%; /* Ajoute un peu d'espace sur les côtés */
+    font-family: Arial, sans-serif;
+  }
+  
+  /* Version mobile */
+  @media screen and (max-width: 768px) {
+    .containerverif, .containerverif2 {
+      flex-direction: column;
+      text-align: center;
+      margin-top: 80px;
+    }
+  
+    .main-contentverif {
+      max-width: 90%;
+    }
+  
+    .main-contentverif h1 {
+      font-size: 35px;
+    }
+  
+    .main-contentverif p {
+      font-size: 20px;
+    }
+  
+    .main-contentverif ul li {
+      font-size: 18px;
+    }
+  
+    .imageverif {
+      max-width: 80%;
+      margin-top: 20px;
+    }
+  }
+  

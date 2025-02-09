@@ -30,8 +30,8 @@ const Section3 = () => {
         <h2>Ready to get started?</h2>
         <p>Sign up and keep going with free option of any service you want</p>
         <div className="buttonss3">
-        <Link to="/register">  <a href="#" class="btn btn-primary">Start Free</a> </Link>
-        <Link to="/contact"> <a href="#" class="btn btn-secondary">Contact Us</a> </Link>
+        <Link to="/register">  <a href="#" class="btns3 btn-primary">Start Free</a> </Link>
+        <Link to="/contact"> <a href="#" class="btns3 btn-secondary">Contact Us</a> </Link>
         </div>
     </section>
 </div>
