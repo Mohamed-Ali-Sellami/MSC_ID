@@ -1,24 +1,42 @@
-//importing express
+// importing express
 const express = require("express");
 const cors = require("cors");
-//initialisation
+const path = require("path");
+
+// initialization
 const app = express();
-//importing database
+
+// importing database
 const connectDB = require("./config/connectDB");
 
-//importing passport
+// importing passport
 const passport = require("passport");
-//importing dotenv
+
+// importing dotenv
 require("dotenv").config();
-//connection database
+
+// connect to database
 connectDB();
-//convert json:middleware
+
+// convert json:middleware
 app.use(express.json());
 app.use(cors());
-//running passport
+
+// running passport
 app.use(passport.initialize());
-//ROUTE
+
+// Routes
 app.use("/user", require("./routes/user"));
+
+// Serve frontend React (after build)
+const __dirname1 = path.resolve();
+app.use(express.static(path.join(__dirname1, "/client/build")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname1, "client", "build", "index.html"));
+});
+
+// Start server
 app.listen(process.env.PORT, (err) => {
-  err ? console.log(err) : console.log("server is running...");
+  err ? console.log(err) : console.log("Server is running...");
 });
