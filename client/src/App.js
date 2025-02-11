@@ -18,7 +18,7 @@ import GestionUser from "./components/Dashboard/Components/GestionUser";
 import { getclient } from "./JS/clientSlice";
 import Contact from "./components/Contact";
 import Company from "./components/Company";
-import Verif from "./components/Verif";
+// import Verif from "./components/Verif";
 
 function App() {
   const isAuth = localStorage.getItem("token");
@@ -53,8 +53,7 @@ function App() {
         <Route path="/solutions" element={<Pagesolutions />} />
         <Route path="/company" element={<Company />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/verification" element={<Verif />} />
-        <Route path="/profil" element={<Profil />} />
+        {/* <Route path="/verification" element={<Verif />} /> */}
         <Route path="/checkpasseport" element={<Checkpasseport />} />
         <Route path="/checkcin" element={<Checkcin />} />
 

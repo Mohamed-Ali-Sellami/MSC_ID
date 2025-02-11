@@ -34,7 +34,7 @@ const Navbar = ({ hideAuthButtons }) => {
               <Link to="/solutions"><div className="nav-item"><a href="#">Solutions</a></div></Link>
               <div className="nav-item"><a href="#">MSC ID app</a></div>
               <Link to="/company"><div className="nav-item"><a href="#">Company</a></div></Link>
-              <Link to="/verification"><div className="nav-item"><a href="#">Try for Free</a></div></Link>
+              {/* <Link to="/verification"><div className="nav-item"><a href="#">Try for Free</a></div></Link> */}
               <Link to="/contact"> <div className="nav-item"><a href="#">Contact</a></div> </Link>
 
               {isAuth && (
@@ -88,7 +88,7 @@ const Navbar = ({ hideAuthButtons }) => {
               <Link to="/"> <div className="nav-item"><a href="#">Acceuil</a></div></Link>
               <Link to="/solutions"> <div className="nav-item"><a href="#">Solutions</a></div></Link>
                 <div className="nav-item"><a href="#">MSC ID app</a></div>
-                <Link to="/verification"><div className="nav-item"><a href="#">Try for Free</a></div></Link>
+                {/* <Link to="/verification"><div className="nav-item"><a href="#">Try for Free</a></div></Link> */}
                 <Link to="/company"> <div className="nav-item"><a href="#">Company</a></div></Link>
                 <Link to="/contact"><div className="nav-item"><a href="#">Contact</a></div></Link>
                 

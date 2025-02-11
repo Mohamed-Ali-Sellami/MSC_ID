@@ -36,7 +36,7 @@ const Profile = () => {
     <div className="profile-page">
       <Navbar />
       <header className="profile-header">
-        <h1>Bienvenue, {user?.name || "Utilisateur"}!</h1>
+        <h1>Bienvenue, {user?.name || "Chez MSC ! "}!</h1>
         <p>Gérez vos certifications et vos vérifications en toute simplicité.</p>
       </header>
 

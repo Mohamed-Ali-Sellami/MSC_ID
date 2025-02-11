@@ -103,5 +103,9 @@
       max-width: 80%;
       margin-top: 20px;
     }
+
+    .imageverif img {
+      margin-bottom: 30px;
+    }
   }
   
