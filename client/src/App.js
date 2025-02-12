@@ -57,7 +57,7 @@ function App() {
         <Route path="/checkpasseport" element={<Checkpasseport />} />
         <Route path="/checkcin" element={<Checkcin />} />
 
-        <Route path="/profil" element={<Profil />} />
+      
 
 
         {/* dashboard */}
