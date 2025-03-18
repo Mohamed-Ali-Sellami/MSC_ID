@@ -144,6 +144,7 @@
   animation: slideIn 0.5s ease-in-out;
 }
 
+
 @keyframes slideIn {
   from {
     opacity: 0;
@@ -162,6 +163,7 @@
   border-radius: 12px;
   border: 1px solid #ddd;
   transition: all 0.3s ease;
+  position: center;
 }
 
 .result-box:hover {
@@ -225,6 +227,66 @@
   margin-bottom: 10px;
 }
 
+
+/* Bouton Réessayer */
+.btn-retry {
+  background: linear-gradient(135deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+  margin-left: 10px;
+}
+
+.btn-retry:hover {
+  background: linear-gradient(135deg, #0056b3, #003d80);
+  transform: scale(1.05);
+}
+
+
+
+/* Bouton Vérifier */
+.btn-verifpass {
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.btn-verifpass:hover {
+  background-color: #45a049;
+}
+
+
+
+/* Groupe de boutons */
+.button-group {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+
+
+
+
+/* Spinner */
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+
+
 /* Responsive Design */
 @media (max-width: 768px) {
   .content-wrapper {
@@ -238,5 +300,9 @@
 
   h1 {
     font-size: 2rem;
+  }
+
+  .btn-retry {
+    margin-top: 20px;
   }
 }
