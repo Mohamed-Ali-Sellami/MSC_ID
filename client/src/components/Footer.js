@@ -22,6 +22,10 @@ const Footer = () => {
             <a href="#"> <i class="fa-brands fa-x-twitter"></i></a>
             <a href="#"> <i class="fa-brands fa-linkedin"></i></a>
         </div>
+
+        <div className='foundername' >
+           <p>© {new Date().getFullYear()} - Founded by Mohamed Ali Sellami</p>
+        </div>
     </div>
 </footer>
         

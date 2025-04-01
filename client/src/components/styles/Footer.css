@@ -38,10 +38,14 @@
     color: white;
 }
 
+.foundername  p {
+  
+    opacity: 0.6;
+    color: white;
+}
 
 .social-links  i {
-    width: 24px;
-    height: 24px;
+   font-size: 25px;
     opacity: 0.6;
     color: white;
 }
