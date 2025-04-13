@@ -5,6 +5,6 @@ import clientSlice from './clientSlice';
 export const store = configureStore({
   reducer: {
     user: userSlice, 
-    client: clientSlice, // Ajouter ici
+    client: clientSlice, 
   },
 });

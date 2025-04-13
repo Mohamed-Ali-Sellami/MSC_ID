@@ -313,13 +313,13 @@ const Checkpasseport = () => {
             <div className="details-section">
               {passportDetails && (
                 <div className="result-box">
-                  <h3>Détails du Passeport :</h3>
-                  <p>Nom : {passportDetails.surname}</p>
-                  <p>Prénom : {passportDetails.givenName}</p>
-                  <p>Numéro : {passportDetails.passportNumber}</p>
-                  <p>Date d'Expiration : {passportDetails.expirationDate}</p>
-                  <p>Nationalité : {passportDetails.nationality}</p>
-                </div>
+                <h3>Détails du Passeport :</h3>
+                <p><strong>Nom :</strong> {passportDetails.surname}</p>
+                <p><strong>Prénom :</strong> {passportDetails.givenName}</p>
+                <p><strong>Numéro :</strong> {passportDetails.passportNumber}</p>
+                <p><strong>Date d'Expiration :</strong> {passportDetails.expirationDate}</p>
+                <p><strong>Nationalité :</strong> {passportDetails.nationality}</p>
+              </div>
               )}
               {verificationResult && (
                 <div className="result-box">

@@ -138,10 +138,18 @@
   flex: 1;
   min-width: 300px;
   background: #ffffff;
+  border: 2px dashed #ccc; /* même style que drop zone */
   border-radius: 20px;
   padding: 30px;
+  text-align: center;
+  transition: all 0.3s ease;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-  animation: slideIn 0.5s ease-in-out;
+}
+
+.details-section:hover {
+  border-color: #007bff;
+  transform: translateY(-5px);
+  box-shadow: 0 8px 24px rgba(0, 123, 255, 0.2);
 }
 
 
@@ -179,12 +187,19 @@
   text-align: center;
 }
 
-.result-box p {
-  margin: 10px 0;
-  color: #555;
-  font-size: 1.8rem;
-  font-weight: bold;
-}
+
+  .result-box p {
+    margin: 10px 0;
+    color: #333;
+    font-size: 1.8rem;
+    
+  }
+  
+  .result-box p strong {
+    font-weight: 900;
+    color: black; /* un bleu foncé pour bien distinguer */
+  }
+  
 
 .btn-certificate {
   margin-top: 20px;

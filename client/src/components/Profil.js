@@ -3,8 +3,9 @@ import { useSelector } from "react-redux";
 import "./styles/Profil.css";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import passeportimg from "./images/passeport.jpg";
+import passeportimg from "./images/passeport.png";
 import cinimg from "./images/cin.png";
+import signature from "./images/signature.png";
 import { Link } from "react-router-dom";
 
 const formatDate = (date) => {
@@ -18,6 +19,7 @@ const Profile = () => {
   const [certifications, setCertifications] = useState([
     { id: 1, name: "Passeport Vérifié", date: formatDate(new Date()), status: "Obtenue" },
     { id: 2, name: "Identité Vérifiée", date: formatDate(new Date()), status: "Obtenue" },
+    { id: 3, name: "Signature Vérifiée", date: formatDate(new Date()), status: "Obtenue" },
   ]);
 
   const requestCertification = () => {
@@ -36,7 +38,7 @@ const Profile = () => {
     <div className="profile-page">
       <Navbar />
       <header className="profile-header">
-        <h1>Bienvenue, {user?.name || "Chez MSC ! "}!</h1>
+        <h1>Bienvenue, {user?.name || "Utilisateur"}!</h1>
         <p>Gérez vos certifications et vos vérifications en toute simplicité.</p>
       </header>
 
@@ -56,7 +58,7 @@ const Profile = () => {
           <p className="profile-location">Tunisia Country</p>
           <div className="button-group">
             <button className="buttonpr">Modifier Profile</button>
-            <Link to="/contact"> <button className="buttonpr">Contactez-Nous</button></Link>
+            <button className="buttonpr">Contactez-Nous</button>
           </div>
         </section>
 
@@ -95,6 +97,10 @@ const Profile = () => {
               <img src={cinimg} alt="Carte d'identité" />
               <span>Vérification Carte d'Identité</span>
             </Link>
+            <div className="verification-card">
+              <img src={signature} alt="Carte d'identité" />
+              <span>Vérification signature</span>
+            </div>
           </div>
         </section>
 
